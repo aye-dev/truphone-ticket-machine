@@ -15,7 +15,7 @@ namespace TruphoneTicketMachine.Tests
     // -> It should use the data source to load the data, search the "searchTerm" using the algorithm and
     // retrieve the corresponding Stations and next character suggestions to be presented to the user
     [TestFixture]
-    public class SearchEngineTests
+    public class StationsSearchEngineTests
     {
         
         [TestCase("DART", new[] { 'F', 'M' }, new[] { "DARTFORD", "DARTMOUTH" }, "F, M", "DARTFORD, DARTMOUTH")]

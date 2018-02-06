@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="IPrefixSearchAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trie\TrieSearchAlgorithm.cs" />
+    <Compile Include="Trie\TrieSearchNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

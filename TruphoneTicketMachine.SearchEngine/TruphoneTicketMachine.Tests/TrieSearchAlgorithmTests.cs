@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using NUnit.Framework;
-using TruphoneTicketMachine.PrefixSearchAlgorithms;
+using TruphoneTicketMachine.PrefixSearchAlgorithms.Trie;
 
 namespace TruphoneTicketMachine.Tests
 {
@@ -45,114 +44,18 @@ namespace TruphoneTicketMachine.Tests
         public void Should_Throw_When_Null_Or_Empty_Strings_Loaded()
         {
             var trieSearchAlgorithm = new TrieSearchAlgorithm();
-            
-            Assert.Throws<NullReferenceException>(() => trieSearchAlgorithm.LoadStrings(null));
+
             Assert.Throws<ArgumentOutOfRangeException>(() => trieSearchAlgorithm.LoadStrings(new[] { string.Empty }));
             Assert.Throws<ArgumentOutOfRangeException>(() => trieSearchAlgorithm.LoadStrings(new string[] { null }));
         }
-    }
 
-    public class TrieSearchAlgorithm : TrieSearchNode, IPrefixSearchAlgorithm
-    {
-        public void LoadStrings(IEnumerable<string> strings)
+        [Test]
+        public void Should_Throw_When_Null_Strings_Array_Loaded()
         {
-            foreach(var str in strings)
-            {
-                if (string.IsNullOrEmpty(str))
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                Insert(str, 0);
-            }
-        }
+            var trieSearchAlgorithm = new TrieSearchAlgorithm();
 
-        public Tuple<IEnumerable<string>, IEnumerable<char>> SearchByPrefix(string prefix)
-        {
-            var node  = string.IsNullOrEmpty(prefix) ? this : Find(prefix, 0);
-            if(node == null)
-            {
-                return new Tuple<IEnumerable<string>, IEnumerable<char>>(new string[0], new char[0]);
-            }
-            return new Tuple<IEnumerable<string>, IEnumerable<char>>(node.GetLeaves(), node.GetChildrenKeys());
+            Assert.Throws<NullReferenceException>(() => trieSearchAlgorithm.LoadStrings(null));
         }
     }
 
-    public class TrieSearchNode
-    {
-        private bool _isComplete = false;
-        public TrieSearchNode(string value = "")
-        {
-            Value = value;
-            Children = new Dictionary<char, TrieSearchNode>();
-        }
-
-        protected void Insert(string newValue, int index)
-        {
-            if (index == newValue.Length)
-            {
-                Value = newValue;
-                _isComplete = true;
-                return;
-            }
-
-            TrieSearchNode child;
-            if (!Children.TryGetValue(newValue[index], out child))
-            {
-                Children[newValue[index]] = child = new TrieSearchNode(newValue.Substring(0, index + 1));
-            }
-            child.Insert(newValue, ++index);
-        }
-
-        protected TrieSearchNode Find(string value, int index)
-        {
-            if (Value == value)
-            {
-                return this;
-            }
-
-            if (index == value.Length)
-            {
-                return null;
-            }
-
-            TrieSearchNode child;
-            if (Children.TryGetValue(value[index], out child))
-            {
-                return child.Find(value, ++index);
-            }
-            return null;
-        }
-
-        public IEnumerable<char> GetChildrenKeys()
-        {
-            return Children.Keys;
-        }
-
-        public IEnumerable<string> GetLeaves()
-        {
-            var leavesList = new List<string>();
-            if (_isComplete)
-            {
-                leavesList.Add(Value);
-            }
-            AddLeaves(leavesList);
-            return leavesList;
-        }
-
-        protected void AddLeaves(List<string> leaves)
-        {
-            if(Children.Count == 0)
-            {
-                leaves.Add(Value);
-                return;
-            }
-            foreach(var child in Children)
-            {
-                child.Value.AddLeaves(leaves);
-            }
-        }
-
-        protected string Value { get; private set; }
-        protected Dictionary<char, TrieSearchNode> Children { get; }
-    }
 }

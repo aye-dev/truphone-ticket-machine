@@ -63,7 +63,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchEngineTests.cs" />
+    <Compile Include="StationsSearchEngineTests.cs" />
     <Compile Include="TrieSearchAlgorithmTests.cs" />
   </ItemGroup>
   <ItemGroup>
