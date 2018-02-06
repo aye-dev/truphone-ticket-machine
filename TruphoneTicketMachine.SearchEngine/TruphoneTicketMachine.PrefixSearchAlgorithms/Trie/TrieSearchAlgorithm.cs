@@ -11,11 +11,15 @@ namespace TruphoneTicketMachine.PrefixSearchAlgorithms.Trie
             {
                 if (string.IsNullOrEmpty(str))
                 {
-                    throw new ArgumentOutOfRangeException("");
+                    throw new ArgumentOutOfRangeException("Loaded string can't be null or empty");
                 }
                 Insert(str, 0);
             }
+
+            DetermineLeavesAndCompleteNodesValues();
         }
+
+
 
         public Tuple<IEnumerable<string>, IEnumerable<char>> SearchByPrefix(string prefix)
         {
@@ -24,7 +28,7 @@ namespace TruphoneTicketMachine.PrefixSearchAlgorithms.Trie
             {
                 return new Tuple<IEnumerable<string>, IEnumerable<char>>(new string[0], new char[0]);
             }
-            return new Tuple<IEnumerable<string>, IEnumerable<char>>(node.GetLeaves(), node.GetChildrenKeys());
+            return new Tuple<IEnumerable<string>, IEnumerable<char>>(node.GetLeavesAndCompleteNodesValues(), node.GetChildrenKeys());
         }
     }
 }

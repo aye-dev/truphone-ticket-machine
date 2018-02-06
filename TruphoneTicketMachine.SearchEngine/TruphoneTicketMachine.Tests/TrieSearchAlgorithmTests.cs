@@ -11,7 +11,8 @@ namespace TruphoneTicketMachine.Tests
     // should work well even with thousands of stations that should be the case for UK
     // when the desired node is found, the children keys are the possible characters and the leaves of
     // the subtree are the stations - seems to have the right datastructure for the problem at hand,
-    // however i will slowdown the search.
+    // however it will slowdown the search - maybe consider determining the leaves after loading all the strings,
+    // and storing reference to leaves and each node to avoid traversing the subtrie when determining the leaves 
     // ALTERNATIVES? - HASHTABLES? - WE COULD EVEN USE SIMPLY DICTIONARY<STRING, LIST<STRING>> that are "hastables" and create
     // all possible prefix substrings for each possible station name and insert all the stations starting with it,
     // but it would use much more memory 
@@ -23,7 +24,7 @@ namespace TruphoneTicketMachine.Tests
         [TestCase(new[] { "LIVERPOOL", "LIVERPOOL LIME STREET", "PADDINGTON" }, "LIVERPOOL", new[] { ' ' }, new[] { "LIVERPOOL", "LIVERPOOL LIME STREET" })]
         [TestCase(new[] { "EUSTON", "LONDON BRIDGE", "VICTORIA"  }, "KINGS CROSS", new char[] { }, new string[] { })]
         [TestCase(new[] { "EUSTON", "LONDON BRIDGE", "VICTORIA" }, "LONDON BRIDGE", new char[] { }, new string[] { "LONDON BRIDGE" })]
-        [TestCase(new[] { "EUSTON", "LONDON BRIDGE", "VICTORIA" }, "", new char[] { 'E', 'L', 'V' }, new string[] { "EUSTON", "LONDON BRIDGE", "VICTORIA" })]
+        [TestCase(new[] { "EUSTON", "LONDON BRIDGE", "VICTORIA", "CLAPHAM JUNCTION" }, "", new char[] { 'E', 'L', 'V' }, new string[] { "EUSTON", "LONDON BRIDGE", "VICTORIA", "CLAPHAM JUNCTION" })]
         public void Should_Retrieve_Expected_Search_Results
             (
             string[] availableStrings, 
@@ -45,8 +46,8 @@ namespace TruphoneTicketMachine.Tests
         {
             var trieSearchAlgorithm = new TrieSearchAlgorithm();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => trieSearchAlgorithm.LoadStrings(new[] { string.Empty }));
-            Assert.Throws<ArgumentOutOfRangeException>(() => trieSearchAlgorithm.LoadStrings(new string[] { null }));
+            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => trieSearchAlgorithm.LoadStrings(new[] { string.Empty }));
+            exception = Assert.Throws<ArgumentOutOfRangeException>(() => trieSearchAlgorithm.LoadStrings(new string[] { null }));
         }
 
         [Test]

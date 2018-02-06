@@ -11,6 +11,31 @@ namespace TruphoneTicketMachine.PrefixSearchAlgorithms.Trie
             Children = new Dictionary<char, TrieSearchNode>();
         }
 
+        public IEnumerable<string> GetLeavesAndCompleteNodesValues()
+        {
+            return LeavesAndCompleteNodesValues;
+        }
+
+        public IEnumerable<char> GetChildrenKeys()
+        {
+            return Children.Keys;
+        }
+
+        public void DetermineLeavesAndCompleteNodesValues()
+        {
+            LeavesAndCompleteNodesValues = new List<string>();
+            if (_isComplete)
+            {
+                LeavesAndCompleteNodesValues.Add(Value);
+            }
+            AddLeaves(LeavesAndCompleteNodesValues);
+
+            foreach(var childKeyValue in Children)
+            {
+                childKeyValue.Value.DetermineLeavesAndCompleteNodesValues();
+            }
+        }
+
         protected void Insert(string newValue, int index)
         {
             if (index == newValue.Length)
@@ -48,22 +73,6 @@ namespace TruphoneTicketMachine.PrefixSearchAlgorithms.Trie
             return null;
         }
 
-        public IEnumerable<char> GetChildrenKeys()
-        {
-            return Children.Keys;
-        }
-
-        public IEnumerable<string> GetLeaves()
-        {
-            var leavesList = new List<string>();
-            if (_isComplete)
-            {
-                leavesList.Add(Value);
-            }
-            AddLeaves(leavesList);
-            return leavesList;
-        }
-
         protected void AddLeaves(List<string> leaves)
         {
             if (Children.Count == 0)
@@ -79,6 +88,7 @@ namespace TruphoneTicketMachine.PrefixSearchAlgorithms.Trie
 
         protected string Value { get; private set; }
         protected Dictionary<char, TrieSearchNode> Children { get; }
+        protected List<string> LeavesAndCompleteNodesValues { get; private set; }
     }
 
 }
