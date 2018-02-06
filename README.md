@@ -13,3 +13,8 @@
 ### Installation and Usage:
 - git clone https://github.com/aye-dev/truphone-ticket-machine.git
 - Build the solution and run TruphoneTicketMachine.Tests
+
+### Other considerations:
+- Could be destributed using NuGet package
+- Brainstorming comments left on porpose
+- Code comments not in place, the signatures/name conventions are self-describing
