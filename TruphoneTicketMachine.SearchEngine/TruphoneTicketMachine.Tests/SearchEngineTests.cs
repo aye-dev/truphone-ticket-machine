@@ -36,12 +36,12 @@ namespace TruphoneTicketMachine.Tests
 
             // Assign
             var prefixSearchAlgorithm = new Mock<IPrefixSearchAlgorithm>();
-            prefixSearchAlgorithm.Setup(a => a.SearchForPrefix(searchTerm)).Returns
+            prefixSearchAlgorithm.Setup(a => a.SearchByPrefix(searchTerm)).Returns
                 (
                 new Tuple<IEnumerable<string>, IEnumerable<char>>(stations, characters)
                 );
 
-            // Act
+            // Act 
             var searchEngine = new StationsSearchEngine(prefixSearchAlgorithm.Object, stationsRepository.Object);
             var searchResult = searchEngine.GetCharactersAndStationsSuggestions(searchTerm);
 

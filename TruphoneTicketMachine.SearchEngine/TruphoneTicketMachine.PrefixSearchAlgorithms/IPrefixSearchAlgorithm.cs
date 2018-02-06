@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic; 
 
 namespace TruphoneTicketMachine.PrefixSearchAlgorithms
 {
     public interface IPrefixSearchAlgorithm
     {
         void LoadStrings(IEnumerable<string> strings);
-        Tuple<IEnumerable<string>, IEnumerable<char>> SearchForPrefix(string prefix);
+        Tuple<IEnumerable<string>, IEnumerable<char>> SearchByPrefix(string prefix);
     }
 }

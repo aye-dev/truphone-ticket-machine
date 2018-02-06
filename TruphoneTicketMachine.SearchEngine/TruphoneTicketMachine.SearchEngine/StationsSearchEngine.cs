@@ -15,11 +15,11 @@ namespace TruphoneTicketMachine.SearchEngines
 
         public StationsSearchResult GetCharactersAndStationsSuggestions(string searchTerm)
         {
-            if (string.IsNullOrEmpty(searchTerm))
+            if (string.IsNullOrEmpty(searchTerm)) 
             {
                 throw new NullReferenceException("The searchTerm can't be null");
             }
-            var searchAlgResult = _prefixSearchAlgorithm.SearchForPrefix(searchTerm);
+            var searchAlgResult = _prefixSearchAlgorithm.SearchByPrefix(searchTerm);
 
             return new StationsSearchResult
                 (
