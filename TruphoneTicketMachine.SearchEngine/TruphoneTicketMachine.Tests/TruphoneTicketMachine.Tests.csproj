@@ -63,7 +63,8 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchEngine\SearchEngineTests.cs" />
+    <Compile Include="SearchEngineTests.cs" />
+    <Compile Include="TrieSearchAlgorithmTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -71,6 +72,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Program.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TruphoneTicketMachine.PrefixSearchAlgorithms\TruphoneTicketMachine.PrefixSearchAlgorithms.csproj">
+      <Project>{cf3d780f-6c76-41b2-b87b-5db5fb56c7f0}</Project>
+      <Name>TruphoneTicketMachine.PrefixSearchAlgorithms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TruphoneTicketMachine.SearchEngine\TruphoneTicketMachine.SearchEngines.csproj">
+      <Project>{80a71dd3-877a-401b-846c-835fe67b4876}</Project>
+      <Name>TruphoneTicketMachine.SearchEngines</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
